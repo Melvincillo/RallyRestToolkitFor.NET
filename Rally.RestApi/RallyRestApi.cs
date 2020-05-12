@@ -584,8 +584,8 @@ namespace Rally.RestApi
 				response = DoGetAsPost(request);
 			else
 				response = DoGet(GetFullyQualifiedUri(request.RequestUrl));
-
-			var result = new QueryResult(response["QueryResult"]);
+			//Fix to add TestCaseResult since the testcaseresult url does not return a QueryResult but a TestCaseResult 
+			var result = new QueryResult(response["QueryResult"] ?? response["TestCaseResult"]);
 			int maxResultsAllowed = Math.Min(request.Limit, result.TotalResultCount);
 			int alreadyDownloadedItems = request.Start - 1 + request.PageSize;
 			var subsequentQueries = new List<Request>();
